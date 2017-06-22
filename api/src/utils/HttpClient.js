@@ -5,7 +5,7 @@ import $ from 'jquery'
 
 // import jsonp from 'superagent-jsonp';
 
-const LOCAL_SERVER = '/cloudapi/';
+const LOCAL_SERVER = 'http://localhost:7000/';
 
 const DEV_SERVER = '';
 const PRO_SERVER = '';
@@ -32,15 +32,10 @@ const errorHandler = (err) => {
 
 const HttpClient = {
     get: (path, query) => new Promise((resolve, reject) => {
-        if(!window.localStorage.getItem('access_token')){
-            router.push({name: 'login'});
-            return false;
-        }
         $('.dk-spinner.dk-spinner-three-bounce, dk-spinner-mask').parent('div').show()
         var req = request
             .get(getUrl(path))
             .query(query)
-            .set('Authorization',  window.localStorage.getItem('access_token'))
             .end((err, res) => {
                 $('.dk-spinner.dk-spinner-three-bounce, dk-spinner-mask').parent('div').hide()
                 if (err) {
@@ -52,16 +47,11 @@ const HttpClient = {
             });
     }),
 
-    post: (path, formdata, query) => new Promise((resolve, reject) => {
-        if(path.indexOf('login/index') < 0 && !window.localStorage.getItem('access_token')){
-            router.push({name: 'login'});
-            return false;            
-        }        
+    post: (path, formdata, query) => new Promise((resolve, reject) => {    
         $('.dk-spinner.dk-spinner-three-bounce, dk-spinner-mask').parent('div').show()
         request
             .post(getUrl(path))
             .set('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
-            .set('Authorization',  window.localStorage.getItem('access_token'))
             .query(query)
             .send(formdata)
             .end((err, res) => {
@@ -70,9 +60,6 @@ const HttpClient = {
                     errorHandler(err)
                     reject(err);
                 } else {
-                    if(path.indexOf('login/index') > -1){
-                        window.localStorage.setItem('access_token', res.body.token_type + ' ' + res.body.access_token)
-                    }
                     resolve(res.body);
                 }
             });

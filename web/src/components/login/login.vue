@@ -1,22 +1,23 @@
 <template>
-	<div class="login-box">
-		<div class="col-sm-12 b-r">
-			<h3 class="m-t-none m-b">登录</h3>
-			<form role="form">
-			    <div class="form-group text-left">
-			        <label>用户名：</label>
-			        <input type="text" v-model="username" name="username" placeholder="请输入用户名" class="form-control required">
-			    </div>
-			    <div class="form-group  text-left">
-			        <label>密码：</label>
-			        <input type="password" v-model="pwd" name="password" placeholder="请输入密码" class="form-control required">
-			    </div>
-			    <div>
-			    	<input type="button" class="btn btn-primary pull-right m-t-n-xs" value="登录" @click="login">
-			    </div>
-			</form>
+	<div class="login">
+		<div class="top">
+			<span class="fa fa-angle-left goBack">
+			</span>
+			<div class="title">登录</div>
 		</div>
-		<div class="copyright">2017 © dk by www.dk-lan.com</div>
+		<form class="main">
+			<div class="section">
+				<span class="fa fa-mobile"></span>
+				<input type="text" v-model="phone" placeholder="请输入手机号码" required>
+			</div>
+			<div class="section">
+				<span class="fa fa-lock lock"></span>
+				<input type="password" v-model="pwd" placeholder="请输入密码" required>
+			</div>
+			<button class="btn btn-info" @click="login">登录</button>
+			<p>忘记密码?</p>
+			<div class="create">尚未注册帐号?<router-link to="/register">创建帐号</router-link></div>
+		</form>
 	</div>
 </template>
 
@@ -28,15 +29,20 @@
 	export default {
 		data: function(){
 			return {
-				username: '',
+				phone: '',
 				pwd: ''
 			}
 		},
 		methods: {
 			login: function(event){
-				if($('form').valid()){
-					this.$store.dispatch('login', {username: this.username, password: this.pwd})
+				if(!/^1[34578]\d{9}$/.test(this.phone)){
+					$.alert('请填写正确的手机号码');
+				}else{
+					if(this.phone && this.pwd){
+						this.$store.dispatch('login', {userphone: this.phone, password: this.pwd})
+					}
 				}
+
 			}
 			// ...mapActions(['login'])
 		}

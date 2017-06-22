@@ -1,42 +1,98 @@
 <template>
-	<div class="dk-container">
-		<dk-header></dk-header>
-		<div class="dk-body">
-			<dk-nav></dk-nav>
-			<div class="dk-content">
-				<div class="dk-toolbar" style="background: #fff;">
-					<a href="javascript:" class="btn btn-primary btn-sm" :class="value.class" v-if="toolList" v-for="(value,key) in toolList" @click="click(value)">{{value.text ? value.text : key}}</a>
-				</div>
-				<router-view class="dk-viewer"></router-view>
+	<div class="home">
+		<zh-create v-show="showcreate"></zh-create>
+		<header>
+	    <h1><img src="./images/admin_logo.png"/></h1>
+	    <ul class="rt_nav">
+	      <li><a href="#" target="_blank" class="website_icon">站点首页</a></li>
+	      <li><a href="#" class="clear_icon">清除缓存</a></li>
+	      <li><a href="#" class="admin_icon">DeathGhost</a></li>
+	      <li><a href="#" class="set_icon">账号设置</a></li>
+	      <li><a href="#" class="quit_icon">安全退出</a></li>
+	    </ul>
+	  </header>
+	  <aside class="lt_aside_nav">
+	    <h2><a href="index.html">起始页</a></h2>
+	    <ul>
+	      <li>
+	        <dl>
+	          <dt>商品信息</dt>
+	          <dd><a href="#" class="active">商品列表</a></dd>
+	          <dd><a href="#">商品详情</a></dd>
+	          <dd><a href="#">商品回收站</a></dd>
+	        </dl>
+	      </li>
+	      <li>
+	        <dl>
+	          <dt>订单信息</dt>
+	          <dd><a href="#">订单列表</a></dd>
+	          <dd><a href="#">订单详情</a></dd>
+	        </dl>
+	      </li>
+	      <li>
+	        <dl>
+	          <dt>会员管理</dt>
+	          <dd><a href="#">会员列表</a></dd>
+	          <dd><a href="#">添加会员</a></dd>
+	          <dd><a href="#">会员等级</a></dd>
+	          <dd><a href="#">会员资金管理</a></dd>
+	        </dl>
+	      </li>
+	    </ul>
+	  </aside>
+	  <div id="right-content">
+	    <div id="right-content-search">
+			<div class="section">
+				<label>商品名称</label>
+				<input type="text" class="form-control input1" />
 			</div>
-		</div>
-		<div class="dk-footer">@dk</div>
-	</div>	
+			<div class="section">
+				<label>商品ID</label>
+				<input type="text" class="form-control input1"/>
+			</div>
+			<button class="btn btn-info" id="btn1">查询</button>
+			<button class="btn btn-info" id="btn2" @click="goodsCreate">添加商品</button>
+	    </div>
+	    <div id="tablebox">
+		    <table class="table table-hover table-striped table-bordered" id="table1">
+		      <thead>
+		        <tr>
+		          <th>1</th>
+		          <th>2</th>
+		          <th>3</th>
+		          <th>4</th>
+		        </tr>
+		      </thead>
+		      <tbody>
+		        <tr>
+		          <td>12111111111</td>
+		          <td>12111111111</td>
+		          <td>33</td>
+		          <td>44</td>
+		        </tr>
+		      </tbody>
+		    </table>
+	    </div>
+	  </div>
+  </div>
 </template>
 
 <script type="text/javascript">
-	import './home.scss'
-	import nav from './nav/nav.vue'
-	import header from './header/header.vue'
+	import './home.css'
+	import create from '../create/create.vue'
 
 	export default {
 		components: {
-			'dk-nav': nav,
-			'dk-header': header
+			'zh-create':create
 		},
 		data(){
 			return {
-				toolList: null
+				showcreate:false,
 			}
 		},
 		methods: {
-			addTool(arg){
-				this.toolList = arg
-			},
-			click(arg){
-				if(arg.event){
-					arg.event()
-				}
+			goodsCreate:function(){
+				this.showcreate=true;
 			}
 		},
 		created(){

@@ -1,0 +1,82 @@
+.register{
+	height: 100%;
+	width: 100%;
+	font-size: 0.12px;
+	.top{
+		height: 0.45rem;
+		width: 100%;
+		.goBack{
+			float: left;
+			display: inline-block;
+			width: 0.4rem;
+			height: 0.45rem;
+			font-size: 0.3rem;
+			text-align: center;
+			line-height: 0.45rem;
+		}
+		.title{
+			padding-top: 0.02rem;
+			float: left;
+			height: 0.45rem;
+			display: inline-block;
+			font-size: 0.18rem;
+			width: 2.4rem;
+			text-align: center;
+			line-height: 0.45rem;
+		}
+	}
+	.main{
+		width: 100%;
+		margin-top:0.9rem;
+		.section{
+			margin:0.3rem auto;
+			height: 0.45rem;
+			width: 2.4rem;
+			background-color: #fafafa;
+			border-radius: 0.03rem;
+			padding-top:0.05rem;
+			span{
+				text-align: center;
+				position: relative;
+				width: 0.25rem;
+				display: inline-block;
+				font-size: 0.25rem;
+				top: 0.05rem;
+				height: 0.25rem;
+				left: 0.03rem;
+				line-height: 0.25rem;
+			}
+			input{
+				width: 2.0rem;
+				display: inline-block;
+				height:0.3rem;
+				border: 0;
+				background-color: #fafafa;
+			}
+			.lock{
+				height: 0.25rem;
+				font-size: 0.22rem;
+			}
+		}
+		.btn-info{
+			display: block;
+			width: 2.4rem;
+			margin:0 auto;
+		}
+		p{
+			float: left;
+			margin-left: 0.39rem;
+			margin-top: 0.06rem;
+			overflow: hidden;
+		}
+		.create{
+			margin-top: 0.5rem;
+			display: inline-block;
+			width: 100%;
+			text-align: center;
+			a{
+				color: #5bc0de;
+			}
+		}
+	}
+}

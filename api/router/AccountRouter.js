@@ -4,89 +4,83 @@ var multer = require ('multer');
 var bodyParser = require('body-parser');
 var storage = multer.diskStorage({  
   destination: function (req, file, cb) {  
-    cb(null, './upload')  
+    cb(null, '../../../../project/wrj/web/src/assets/imgs/goods/')  
   },  
   filename: function (req, file, cb) {  
       var fileFormat = (file.originalname).split(".");
       cb(null, file.fieldname + '-' + Date.now() + "." + fileFormat[fileFormat.length - 1]);    
   }  
-})
+}) 
+
 var upload = multer({ storage: storage })
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 exports.Register = function(app){
-    app.post('/logins', urlencodedParser, function(request, response){ 
-        if(!request.body || !request.body.username){
-            response.send(ApiResult(false, '用户名不能为空！'));
-        } else if(!request.body || !request.body.password){
-            response.send(ApiResult(false, '密码不能为空！'));
-        } else {
-            DB.get('account', {username: request.body.username}, function(result){
-                if(!result.status){
-                    response.send(result);
-                } else {
-                    var data = result.data;
-                    if(!data[0]){
-                        response.send(ApiResult(false, '用户名不存在！'));
-                    } else if(data[0].password != request.body.password){
-                        response.send(ApiResult(false, '密码错误！'));
-                    } else {
-                        response.send(ApiResult(true));
-                    }
-                }
+    //后台添加商品
+    app.post('/upload', upload.fields([{ name: 'imgurl', maxCount: 10 }]), function(request, response) {
+        var img=[];
+        if(request.files){
+            request.files.imgurl.map(function(item,index){
+                return img.push(item.filename)
             })
-        }
-    });    
-    app.post('/login', urlencodedParser, function(request, response){
-        if(!request.body || !request.body.userphone){
-            response.send(ApiResult(false, '用户名不能为空！'));
-        } else if(!request.body || !request.body.password){
-            response.send(ApiResult(false, '密码不能为空！'));
-        } else {
-            DB.get('account', {userphone: request.body.userphone}, function(result){
-                if(!result.status){
-                    response.send(result);
+            request.body.imgurl=img;
+        }    
+        console.log(request.body);
+
+        DB.get('goods', {id: request.body.id}, function(result){
+            var obj = request.body;
+            if(!result.status){
+                response.send(result);
+            } else {
+                var data = result.data;
+                if(data[0]){
+                    response.send(ApiResult(false, '商品id已登记'));
                 } else {
-                    var data = result.data;
-                    if(!data[0]){
-                        response.send(ApiResult(false, '用户名不存在！'));
-                    } else if(data[0].password != request.body.password){
-                        response.send(ApiResult(false, '密码错误！'));
-                    } else {
-                        response.send(ApiResult(true));
-                    }
+                    DB.insert('goods',obj, function(insertResult){
+                        response.send(insertResult);
+                    })
                 }
-            })
-        }
+            }
+        })  
     });
-    // 注册
-     app.post('/register', urlencodedParser, function(request, response){
-        if(!request.body || !request.body.userphone){
-            response.send(ApiResult(false, '用户名不能为空！'));
-        } else if(!request.body || !request.body.password){
-            response.send(ApiResult(false, '密码不能为空！'));
-        }
-        else if(!request.body || !request.body.nickname){
-            response.send(ApiResult(false, '昵称不能为空！'));
-        }
-         else {
-            delete request.body.repassword;
+
+
+    //前端登录   
+    app.post('/login', urlencodedParser, function(request, response){
+        console.log(request.body)
             DB.get('account', {userphone: request.body.userphone}, function(result){
-                var obj = request.body;
-                obj.id = obj.userphone;
                 if(!result.status){
                     response.send(result);
                 } else {
                     var data = result.data;
-                    if(data[0]){
-                        response.send(ApiResult(false, '用户名已被注册'));
+                    if(!data[0]){
+                        response.send(ApiResult(false, '用户名不存在！'));
+                    } else if(data[0].password != request.body.password){
+                        response.send(ApiResult(false, '密码错误！'));
                     } else {
-                        DB.insert('account',obj, function(insertResult){
-                            response.send(insertResult);
-                        })
+                        response.send(ApiResult(true,'登录成功',data[0].userphone));
                     }
                 }
             })
-        }        
+    });
+    // 前端注册
+     app.post('/register', urlencodedParser, function(request, response){
+        console.log(request.body)
+        DB.get('account', {userphone: request.body.userphone}, function(result){
+            var obj = request.body;
+            obj.id = obj.userphone;
+            if(!result.status){
+                response.send(result);
+            } else {
+                var data = result.data;
+                if(data[0]){
+                    response.send(ApiResult(false, '用户名已被注册'));
+                } else {
+                    DB.insert('account',obj, function(insertResult){
+                        response.send(insertResult);
+                    })
+                }
+            }
+        })      
     })   
 }
