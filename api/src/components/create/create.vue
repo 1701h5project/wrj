@@ -26,6 +26,10 @@
 		    <label for="goodsprice2">商品二价格</label>
 		    <input type="text" v-model="goodsprice2" class="form-control" id="goodsprice2" placeholder="商品价格">
 		  </div>
+		  <div class="form-group">
+		    <label for="goodsSale">商品销量</label>
+		    <input type="text" v-model="goodsSale" class="form-control" id="goodsSale" placeholder="销量">
+		  </div>
 		   <div class="form-group">
 		    <label for="goodsCharacteristic1">商品一描述</label>
 		    <input type="text" v-model="goodsCharacteristic1" class="form-control" id="goodsCharacteristic1" placeholder="商品一描述">
@@ -122,7 +126,8 @@
 	import { mapGetters, mapActions } from 'vuex'
 	import $ from 'jquery'
 	import './jquery.form.js'
-
+	import erp from '../../assets/common/global'
+	console.log(erp)
 	export default {
 		data: function(){
 			return {
@@ -132,6 +137,7 @@
 				goodsname2:'',
 				goodsprice1:'',
 				goodsprice2:'',
+				goodsSale:'',
 				goodsCharacteristic1:'',
 				goodsCharacteristic2:'',
 				goodsCharacteristic3:'',
@@ -156,7 +162,10 @@
 				if(this.goodsID && $('#pricter1').val()){
 					var alldata={}
 					alldata.id=this.goodsID;
+					alldata.Classify=this.goodsClassify;
+					alldata.price=[this.goodsprice1,this.goodsprice2]
 					alldata.name=[this.goodsname1,this.goodsname2];
+					alldata.goodsSale=this.goodsSale;
 					alldata.characteristic=[this.goodsCharacteristic1,this.goodsCharacteristic2,
 					this.goodsCharacteristic3,this.goodsCharacteristic4,this.goodsCharacteristic5,this.goodsCharacteristic6];
 					alldata.problem=[this.goodsPro1,this.goodsPro2,this.goodsPro3,this.goodsPro4,this.goodsPro5];
@@ -164,7 +173,7 @@
 					console.log(alldata)
 					$('#createForm1').ajaxSubmit({
 						type: 'post',
-						url:'http://localhost:7000/upload',
+						url:erp.baseUrl+'upload',
 						data:alldata,
 						success:function(response){
 	                        if(response.status){

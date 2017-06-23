@@ -25,7 +25,6 @@ exports.Register = function(app){
             })
             request.body.imgurl=img;
         }    
-        console.log(request.body);
 
         DB.get('goods', {id: request.body.id}, function(result){
             var obj = request.body;
@@ -43,8 +42,34 @@ exports.Register = function(app){
             }
         })  
     });
-
-
+    //后台更新数据
+    app.post('/update', upload.fields([{ name: 'imgurl', maxCount: 10 }]), function(request, response) {
+        var img=[];
+        if(request.files){
+            request.files.imgurl.map(function(item,index){
+                return img.push(item.filename)
+            })
+            request.body.imgurl=img;
+        }    
+            
+        DB.update('goods', request.body, function(result){
+             response.send(result);
+        })  
+    });
+    //后台删除数据
+    app.get('/deldata',function(request,response){
+        var obj = request.query;
+        DB.del('goods',obj,function(result){
+            response.send(result);
+        })
+    }) 
+    // 查找数据 
+    app.get('/getGoodsdata',function(request,response){
+        var obj = request.query;
+        DB.get('goods',obj,function(result){
+            response.send(result);
+        })
+    })  
     //前端登录   
     app.post('/login', urlencodedParser, function(request, response){
         console.log(request.body)

@@ -76,7 +76,7 @@ header .rt_nav li .quit_icon:before{content:"Q";}
 .lt_aside_nav dl dd .active:after{content:">";font-family:'adminthemesregular';position:absolute;right:3%;color:#19a97b;}
 .lt_aside_nav .btm_infor{height:35px;line-height:35px;width:100%;background:#efefef;border-top:1px #b6b6b6 solid;text-align:center;color:#aaa;}
 /*right*/
-#right-content{overflow: hidden;width:1070px;position:absolute;top: 70px;left:210px;height:700px;}
+#right-content{overflow: hidden;width:1070px;position:absolute;top: 70px;left:210px;height:550px;}
 #right-content-search{padding-left:48px;height: 45px;margin-bottom: 20px;border-bottom: 1px solid #ddd;}
 #right-content-search .section{float: left;margin-top: 8px;margin-right: 20px;}
 #right-content-search .section .input1{display: inline-block;width:150px;height: 30px;}
@@ -84,11 +84,11 @@ header .rt_nav li .quit_icon:before{content:"Q";}
 #table1{border-top: 0px;}
 #btn1{height: 30px;width: 40xp;margin-top: 8px;}
 #btn2{float: right;height: 30px;margin-top: 8px;margin-right: 50px;}
-#tablebox{border:1px solid #ddd;overflow: hidden;overflow-x: auto;margin-left:50px;margin-right:50px;width:970px;position:absolute;}
-#right-content table thead tr th{text-align: center;}
-#right-content table tbody tr td{text-align: center;min-width: 70px}
-
-
+#tablebox{border:1px solid #ddd;overflow: hidden;overflow-x: auto;overflow-y: auto;margin-left:50px;margin-right:50px;width:970px;position:absolute;}
+#tablebox table thead tr th{text-align: center;}
+#tablebox table tbody tr td{text-align: center;min-width: 100px}
+#tablebox table tbody tr td .btn{width: 60px;float: left;margin-bottom: 5px;margin-left: 12px;}
+#tablebox .table{width:2000px;}
 
 
 

@@ -53,5 +53,46 @@ module.exports = {
             })
         //     db.close();
         // })
+    },
+    update:function(_collection, _condition, _callback){
+        // db.open(function(dberror){
+        //     if(dberror){
+        //         _callback(ApiResult(false, null, dberror));
+        //         return;
+        //     }
+            db.collection(_collection, function(collerror, collection){
+                if(collerror){
+                    _callback(ApiResult(false, null, collerror));
+                    return;
+                }
+                var condition = _condition || {};
+                console.log(condition.id)
+                collection.update({'id':condition.id},{$set:condition},function(resulterror,result){
+                    if(resulterror){
+                        _callback(ApiResult(false, '修改失败', resulterror));
+                    } else {
+                        _callback(ApiResult(true, '修改成功', result));
+                    }
+                })
+            })
+        //     db.close();
+        // })
+    },
+    del:function(_collection, _condition, _callback){
+        db.collection(_collection, function(collerror, collection){
+            if(collerror){
+                _callback(ApiResult(false, null, collerror));
+                return;
+            }
+            var condition = _condition || {};
+            console.log(condition.id)
+            collection.remove({'id':condition.id},function(resulterror,result){
+                if(resulterror){
+                    _callback(ApiResult(false, '删除失败', resulterror));
+                } else {
+                    _callback(ApiResult(true, '删除成功', result));
+                }
+            })
+        })
     }
 }
