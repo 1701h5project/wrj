@@ -115,7 +115,7 @@
 		    <input type="file" name="imgurl" id="pricter15" >
 		  </div>
 		  <button class="btn btn-info" @click="modify1">修改</button>
-		  <button class="btn btn-info" @click="back">返回</button>
+		  <button class="btn btn-danger" @click="back">返回</button>
 		</form>
 		<iframe name="ajaxFrame" style="display: none;"></iframe>
 	</div>

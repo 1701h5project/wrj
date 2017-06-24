@@ -9,7 +9,7 @@
 	      <li><a href="#" class="clear_icon">清除缓存</a></li>
 	      <li><a href="#" class="admin_icon">DeathGhost</a></li>
 	      <li><a href="#" class="set_icon">账号设置</a></li>
-	      <li><a href="#" class="quit_icon">安全退出</a></li>
+	      <li @click="logOut"><a href="javascript:void(0)" class="quit_icon">安全退出</a></li>
 	    </ul>
 	  </header>
 	  <aside class="lt_aside_nav">
@@ -86,6 +86,7 @@
 	import modify from '../modify/modify.vue'
 	import $ from 'jquery'
 	import erp from '../../assets/common/global'
+	import router from '../../router/index'
 	export default {
 		components: {
 			'zh-create':create,
@@ -107,6 +108,11 @@
 		methods: {
 			goodsCreate:function(){
 				this.showcreate=true;
+			},
+			logOut:function(){
+				window.sessionStorage.removeItem('supername')
+				router.push({name:"login"})
+				$.alert("注销成功!")
 			},
 			search:function(){
 				var _dataset = [];
@@ -166,6 +172,40 @@
 						data:{"id":id},
 						success:function(response){
 							$.alert(response.message)
+							$.ajax({
+								type:'get',
+								url:erp.baseUrl+'getGoodsdata',
+								success:function(response){
+									console.log(response)
+									for(var i=0;i<response.data.length;i++){
+										var name='';
+										response.data[i].name.map(function(item,index){
+											name+=item+','
+											return name;
+										})
+										response.data[i].name=name.slice(0,-1);
+
+										var price='';
+										response.data[i].price.map(function(item,index){
+											price+=item+','
+											return price;
+										})
+										response.data[i].price=price.slice(0,-1);
+
+										var characteristic='';
+										response.data[i].characteristic.map(function(item,index){
+											characteristic+=item
+											return characteristic;
+										})
+										response.data[i].characteristic=characteristic;
+									}
+									self.data=response.data;
+									self.dataOrigin=response.data;
+								},
+								error:function(err){
+										console.log(err)
+								}	
+							})        
 						},
 						error:function(response){
 							console.log(response);

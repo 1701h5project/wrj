@@ -4,19 +4,13 @@ import http from '../utils/HttpClient'
 
 import HomeComponent from '../components/home/home.vue'
 import LoginComponent from '../components/login/login.vue'
-import CreateComponent from '../components/create/create.vue'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
 	routes: [{
 		path: '/',
 		name: 'home',
-		component: HomeComponent,
-		children: [{
-			path: '/create',
-			name: 'create',
-			component: CreateComponent
-		}]
+		component: HomeComponent
 	},{
 		path: '/login',
 		name: 'login',
@@ -27,10 +21,10 @@ const router = new VueRouter({
 // 对将要进入的路由进行权判断
 router.beforeEach((to, from, next) =>{
 	// console.log(to);
-	// if(to.path.indexOf('login') < 0 && !window.localStorage.getItem('access_token')){
-	// 	router.replace('login');
-	// 	next();
-	// } 
+	if(to.path.indexOf('login') < 0 && !window.sessionStorage.getItem('supername')){
+		router.replace('login');
+		next();
+	} 
 	next();
 })
 

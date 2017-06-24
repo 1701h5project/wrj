@@ -115,7 +115,7 @@
 		    <input type="file" name="imgurl" id="pricter5" >
 		  </div>
 		  <button class="btn btn-info" @click="sub">提交</button>
-		  <button class="btn btn-info" @click="back">返回</button>
+		  <button class="btn btn-danger" @click="back">返回</button>
 		</form>
 		<iframe name="ajaxFrame" style="display: none;"></iframe>
 	</div>
@@ -162,9 +162,9 @@
 				if(this.goodsID && $('#pricter1').val()){
 					var alldata={}
 					alldata.id=this.goodsID;
-					alldata.Classify=this.goodsClassify;
-					alldata.price=[this.goodsprice1,this.goodsprice2]
 					alldata.name=[this.goodsname1,this.goodsname2];
+					alldata.price=[this.goodsprice1,this.goodsprice2]
+					alldata.Classify=this.goodsClassify;
 					alldata.goodsSale=this.goodsSale;
 					alldata.characteristic=[this.goodsCharacteristic1,this.goodsCharacteristic2,
 					this.goodsCharacteristic3,this.goodsCharacteristic4,this.goodsCharacteristic5,this.goodsCharacteristic6];
@@ -179,6 +179,40 @@
 	                        if(response.status){
 	                        	$.alert(response.message)
 	                        	self.$parent.showcreate=false;
+	                        	$.ajax({
+									type:'get',
+									url:erp.baseUrl+'getGoodsdata',
+									success:function(response){
+										console.log(response)
+										for(var i=0;i<response.data.length;i++){
+											var name='';
+											response.data[i].name.map(function(item,index){
+												name+=item+','
+												return name;
+											})
+											response.data[i].name=name.slice(0,-1);
+
+											var price='';
+											response.data[i].price.map(function(item,index){
+												price+=item+','
+												return price;
+											})
+											response.data[i].price=price.slice(0,-1);
+
+											var characteristic='';
+											response.data[i].characteristic.map(function(item,index){
+												characteristic+=item
+												return characteristic;
+											})
+											response.data[i].characteristic=characteristic;
+										}
+										self.$parent.data=response.data;
+										self.$parent.dataOrigin=response.data;
+									},
+									error:function(err){
+											console.log(err)
+									}	
+								})        
 	                        }else{
 	                        	$.alert(response.message)
 	                        }

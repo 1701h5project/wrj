@@ -1,7 +1,7 @@
 <template>
 	<div class="login-box">
 		<div class="col-sm-12 b-r">
-			<h3 class="m-t-none m-b">登录</h3>
+			<h3 class="m-t-none m-b logins">后台系统登录</h3>
 			<form role="form">
 			    <div class="form-group text-left">
 			        <label>用户名：</label>
@@ -16,7 +16,6 @@
 			    </div>
 			</form>
 		</div>
-		<div class="copyright">2017 © dk by www.dk-lan.com</div>
 	</div>
 </template>
 
@@ -34,7 +33,7 @@
 		},
 		methods: {
 			login: function(event){
-				if($('form').valid()){
+				if(this.username && this.pwd){
 					this.$store.dispatch('login', {username: this.username, password: this.pwd})
 				}
 			}

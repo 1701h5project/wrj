@@ -25,7 +25,7 @@ exports.Register = function(app){
             })
             request.body.imgurl=img;
         }    
-
+        console.log(request.body)
         DB.get('goods', {id: request.body.id}, function(result){
             var obj = request.body;
             if(!result.status){
@@ -63,13 +63,34 @@ exports.Register = function(app){
             response.send(result);
         })
     }) 
-    // 查找数据 
+    // 后台查找数据 
     app.get('/getGoodsdata',function(request,response){
         var obj = request.query;
         DB.get('goods',obj,function(result){
             response.send(result);
         })
     })  
+    //后台登录
+    app.post('/erplogin', urlencodedParser, function(request, response){
+        console.log(request.body)
+            DB.erpget('super', {username: request.body.username}, function(result){
+                if(!result.status){
+                    response.send(result);
+                } else {
+                    var data = result.data;
+                    if(!data[0]){
+                        response.send(ApiResult(false, '用户名不存在！'));
+                    } else if(data[0].password != request.body.password){
+                        response.send(ApiResult(false, '密码错误！'));
+                    } else {
+                        response.send(ApiResult(true,'登录成功',data[0].username));
+                    }
+                }
+            })
+    });
+
+//----------------------------------------------下面是前台的路由-------------------------------------------------------------
+    
     //前端登录   
     app.post('/login', urlencodedParser, function(request, response){
         console.log(request.body)

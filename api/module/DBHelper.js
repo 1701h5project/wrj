@@ -31,6 +31,29 @@ module.exports = {
         //     db.close();
         // })
     },
+    erpget: function(_collection, _condition, _callback){
+        // db.open(function(dberror){
+        //     if(dberror){
+        //         _callback(ApiResult(false, null, dberror));
+        //         return;
+        //     }
+            db.collection(_collection, function(collerror, collection){
+                if(collerror){
+                    _callback(ApiResult(false, null, collerror));
+                    return;
+                }
+                var condition = _condition || {};
+                collection.find(condition).toArray(function(resulterror, dataset){
+                    if(resulterror){
+                        _callback(ApiResult(false, null, resulterror));    
+                    } else {
+                        _callback(ApiResult(true, null, dataset));
+                    }
+                })
+            })
+        //     db.close();
+        // })
+    },
     insert: function(_collection, _newdata, _callback){
         // db.open(function(dberror){
         //     if(dberror){
@@ -95,4 +118,6 @@ module.exports = {
             })
         })
     }
+    
+//--------------------------------------------下面是前端的数据库处理-------------
 }
