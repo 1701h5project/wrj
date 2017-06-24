@@ -198,6 +198,7 @@
 											})
 											response.data[i].characteristic=characteristic;
 										}
+										self.$parent.page=Math.ceil(response.data.length/4)
 										self.$parent.data=response.data;
 										self.$parent.dataOrigin=response.data;
 									},

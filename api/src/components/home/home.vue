@@ -67,15 +67,20 @@
 		        </tr>
 		      </thead>
 		      <tbody>
-		        <tr>
-		          <tr v-for="obj in data">
+		        <!-- <tr v-for="obj in data">
+		          	<td><button class="btn btn-info compile" :id="obj.id" @click="modify">编辑</button> <button class="btn btn-danger del" :id="obj.id" @click="del">删除</button> </td>
+					<td v-for="(value, key) in obj"  v-if="columns.indexOf(key) > -1">{{value}}</td>
+				</tr> -->
+				<tr v-for="obj in even(data)">
 		          	<td><button class="btn btn-info compile" :id="obj.id" @click="modify">编辑</button> <button class="btn btn-danger del" :id="obj.id" @click="del">删除</button> </td>
 					<td v-for="(value, key) in obj"  v-if="columns.indexOf(key) > -1">{{value}}</td>
 				</tr>
-		        </tr>
 		      </tbody>
 		    </table>
 	    </div>
+	    <div id="nav-page">
+		    <span v-for="n in this.page" :data-index="n" @click="shift">{{n}}</span>
+		</div>
 	  </div>
   </div>
 </template>
@@ -102,10 +107,20 @@
 				goodsname:'',
 				goodsID:'',
 				goodsClassify:'',
-				columns:['id','Classify','price','name','characteristic','goodsSale']
+				columns:['id','Classify','price','name','characteristic','goodsSale'],
+				number:4,
+				pernumber:0,
+				page:1
 			}
 		},
 		methods: {
+			shift:function(event){
+				this.number=4*event.target.getAttribute("data-index")
+				this.pernumber=this.number-4
+			},
+			even:function(data){
+				return data.slice(this.pernumber,this.number)
+			},
 			goodsCreate:function(){
 				this.showcreate=true;
 			},
@@ -116,10 +131,8 @@
 			},
 			search:function(){
 				var _dataset = [];
-				console.log(this.dataOrigin)
 				for(var i=0;i<this.dataOrigin.length;i++){
   						var obj1= this.dataOrigin[i]
-  						console.log(obj1)
   						var _result = (
 	  						(!this.goodsname || obj1.name.indexOf(this.goodsname) > -1)
 	  						&& (!this.goodsID || obj1.id.indexOf(this.goodsID) > -1)
@@ -130,7 +143,8 @@
   							_dataset.push(obj1);
   						}
   				}
-  					console.log(_dataset);
+  					this.page=Math.ceil(_dataset.length/4)
+  					console.log(self.page)
   					this.data = _dataset;
 
 			},
@@ -199,7 +213,9 @@
 										})
 										response.data[i].characteristic=characteristic;
 									}
+									self.page=Math.ceil(response.data.length/4)
 									self.data=response.data;
+									self.number=4
 									self.dataOrigin=response.data;
 								},
 								error:function(err){
@@ -244,6 +260,7 @@
 						})
 						response.data[i].characteristic=characteristic;
 					}
+					self.page=Math.ceil(response.data.length/4)
 					self.data=response.data;
 					self.dataOrigin=response.data;
 				},
