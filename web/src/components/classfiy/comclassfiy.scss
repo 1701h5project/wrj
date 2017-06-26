@@ -1,0 +1,13 @@
+@import '../../assets/common/common.scss';
+.ajaxmain{
+    width:100%;
+    h4{width:100%;color: #707473;font-size: 0.16rem;}
+    ul{
+        li{float:left;text-align:center;width:50%;margin-top:0.1rem;
+            a{display: block;width:100%;color:#707473;
+                img{display: block;width:0.65rem;height: 0.65rem;margin:0 auto;}
+                p{margin-top:0.1rem;}
+            }
+        }
+    }
+}
