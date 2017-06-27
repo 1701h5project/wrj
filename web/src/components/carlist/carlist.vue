@@ -99,6 +99,9 @@ export default {
             
             this.goods[idx].qty++
            this.sum()
+           var goodsQty = this.goods[idx].qty
+           var goodsName = this.goods[idx].name
+           $.post(erp.baseUrl + 'setQty',{"name":goodsName,"qty":goodsQty})
         
         },
         //点击减少数量
@@ -107,6 +110,9 @@ export default {
                 this.goods[idx].qty--
             }
             this.sum()
+            var goodsQty = this.goods[idx].qty
+           var goodsName = this.goods[idx].name
+           $.post(erp.baseUrl + 'setQty',{"name":goodsName,"qty":goodsQty})
         },
         //删除商品
         close:function(idx){

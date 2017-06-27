@@ -289,5 +289,17 @@ module.exports = {
                 collection.remove(data)
             }
         });
+    },
+
+    //改变用户商品数量
+    setQty:function(_collection,data,callback){
+        console.log(data)
+         db.collection(_collection, function(error, collection){
+            if(error){
+                console.log(error)
+            } else {
+                 collection.update({"name":data.name},{"$set":{"qty":data.qty}})
+            }
+        });
     }
 }

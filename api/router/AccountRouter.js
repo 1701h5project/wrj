@@ -187,7 +187,15 @@ exports.Register = function(app){
     app.post('/delGoods',urlencodedParser,function(request,response){
         var obj = request.body
         DB.delGoods('buycar',obj)
+    });
+
+     //修改商品数量
+    app.post('/setQty',urlencodedParser,function(request,response){
+        var obj = request.body
+        console.log(obj)
+        DB.setQty('buycar',obj)
     })
+
 
      
 }
