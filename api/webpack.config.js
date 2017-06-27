@@ -28,9 +28,9 @@ module.exports = {
       {
           test: /\.(jpe?g|png|gif|svg)$/i,
           use: [{
-            loader: 'file-loader',
+            loader: 'url-loader',
             options: {query: {
-                name:'assets/[name].[ext]'
+                name:path.join(__dirname, 'assets/[name].[hash:7].[ext]')
               }
             }
           },{
@@ -56,7 +56,7 @@ module.exports = {
       { 
           test: /\.(woff|svg|eot|ttf)\??.*$/,
           exclude: /node_modules/,
-          loader: 'url-loader?limit=50000&name=[path][name].[ext]'
+          loader: 'url-loader?limit=80000&name=fonts/[name].[md5.hash.hex:7].[ext]'
       },
       {
           test: /\.scss$/,

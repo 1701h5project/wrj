@@ -181,5 +181,13 @@ exports.Register = function(app){
         DB.carlist('buycar',obj,function(result){
           response.send(result);
         }); 
-    }); 
+    });
+
+    //删除商品信息
+    app.post('/delGoods',urlencodedParser,function(request,response){
+        var obj = request.body
+        DB.delGoods('buycar',obj)
+    })
+
+     
 }

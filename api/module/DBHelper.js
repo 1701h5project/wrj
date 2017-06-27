@@ -277,5 +277,17 @@ module.exports = {
                 });
             }
         });
+    },
+
+    //删除用户商品信息
+    delGoods:function(_collection,data,callback){
+        console.log(data)
+         db.collection(_collection, function(error, collection){
+            if(error){
+                console.log(error)
+            } else {
+                collection.remove(data)
+            }
+        });
     }
 }
