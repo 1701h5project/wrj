@@ -172,7 +172,7 @@ export default {
        $.get(erp.baseUrl+'carlist', {"userphone":window.localStorage.getItem('userphone')},function(res){
         console.log(res)
             this.goods = res
-            if(this.goods){
+            if(this.goods.length>0){
                 $('.hasgoods').show()
                  $('.empty').hide()
                 

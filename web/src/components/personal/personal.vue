@@ -6,7 +6,7 @@
                 <div class="personal-main">
                     <div class="personal-use">
                         <div class="personal-photo">
-                            <img src="" alt="">
+                            <img src="../../assets/imgs/goods/imgurl-1498180433556.jpg" alt="">
                         </div>
                         <div class="personal-name">{{getItem}}</div> 
                     </div>
