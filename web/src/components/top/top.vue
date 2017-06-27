@@ -131,7 +131,7 @@
 				},30);
 			},
 			handleScroll(){
-				this.scroll = document.body.scrollTop > 100;
+				this.scroll = document.body.scrollTop > 300;
 			},
 			goBack(){
 				this.$router.go(-1)

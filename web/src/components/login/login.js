@@ -23,7 +23,7 @@ const mutations = {
 				if(response.status){
 					$.alert(response.message)
 					window.localStorage.setItem('userphone',response.data)
-					router.push({name: 'home'})
+					router.push({name: 'personal'})
 				}else{
 					$.alert(response.message)
 				}

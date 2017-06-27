@@ -10,7 +10,7 @@
                 <p></p>
             </div>
             <div class="continue">
-                <a href="javascript:;">继续购物</a>
+                <router-link to="/list">继续购物</router-link>
             </div>
         </div>
         
@@ -60,7 +60,7 @@
                     </div>  
                 </div>
                 <div class="pay">
-                    <a href="#">继续购物</a>
+                    <router-link to="/list">继续购物</router-link>
                     <a href="#">去结算</a>
                 </div>
             </div>
@@ -110,25 +110,33 @@ export default {
         },
         //删除商品
         close:function(idx){
+            
+            var goodsName = this.goods[idx].name
+            $.post(erp.baseUrl + 'delGoods',{"name":goodsName})
             this.goods.splice(idx,1)
-            this.sum()
+            this.sum() 
+            if(this.goods.length <= 0){
+                $('.empty').show()
+                $('.hasgoods').hide()
+            }
+            
         },
         //点击选择框更新价格
         checkIsall: function (idx) {
             setTimeout(function(){this.sum()}.bind(this),100)
             
-            // var t = 0;
+            var t = 0;
             for (var i = 0; i < this.goods.length; i++) {
-                this.goods[i].checked?this.allChecked = false:this.allChecked = true;
-                    
-                
+                if(this.goods[i].checked){
+                    t++
+                }
             }
             
-            // if (t == this.goods.length) {
-            //     this.allChecked = true
-            // } else {
-            //     this.allChecked = false
-            // }
+            if (t == this.goods.length) {
+                this.allChecked = true
+            } else {
+                this.allChecked = false
+            }
             
           
         },
