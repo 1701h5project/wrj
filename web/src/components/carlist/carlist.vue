@@ -116,15 +116,17 @@ export default {
         },
         //删除商品
         close:function(idx){
-            
-            var goodsName = this.goods[idx].name
-            $.post(erp.baseUrl + 'delGoods',{"name":goodsName})
-            this.goods.splice(idx,1)
-            this.sum() 
-            if(this.goods.length <= 0){
-                $('.empty').show()
-                $('.hasgoods').hide()
+            if (confirm("你确定移除该商品？")) {
+                var goodsName = this.goods[idx].name
+                $.post(erp.baseUrl + 'delGoods',{"name":goodsName})
+                this.goods.splice(idx,1)
+                this.sum() 
+                if(this.goods.length <= 0){
+                    $('.empty').show()
+                    $('.hasgoods').hide()
+                }
             }
+            
             
         },
         //点击选择框更新价格
