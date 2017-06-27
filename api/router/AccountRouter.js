@@ -4,7 +4,7 @@ var multer = require ('multer');
 var bodyParser = require('body-parser');
 var storage = multer.diskStorage({  
   destination: function (req, file, cb) {  
-    cb(null, '../../../../project/wrj/web/src/assets/imgs/goods/')  
+    cb(null, 'C:/Users/Administrator/Desktop/wrj/web/src/assets/imgs/goods/')  
   },  
   filename: function (req, file, cb) {  
       var fileFormat = (file.originalname).split(".");
